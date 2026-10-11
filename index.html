@@ -1,0 +1,145 @@
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adaptive Smart Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Smart Calculator</h2>
+
+    <!-- User Login -->
+    <div id="loginSection">
+        <div class="login-header">
+            <h3>Welcome back!</h3>
+            <p>Sign in with your name to unlock the calculator and start solving fast.</p>
+        </div>
+        <div class="login-card">
+            <input type="text" id="username" placeholder="Enter your name" autocomplete="name" autofocus onkeypress="if(event.key==='Enter'){setUser();}">
+            <button onclick="setUser()">Continue</button>
+            <p class="login-note">No password required — just type your name and tap continue.</p>
+        </div>
+    </div>
+
+    <!-- Calculator / Tools Section -->
+    <div id="calculatorSection" style="display:none;">
+        <div class="tool-tabs">
+            <button class="tab-button active" data-tab="calcTab" onclick="showTab('calcTab', this)">Calculator</button>
+            <button class="tab-button" data-tab="cgpaTab" onclick="showTab('cgpaTab', this)">CGPA</button>
+            <button class="tab-button" data-tab="cutoffTab" onclick="showTab('cutoffTab', this)">Cutoff</button>
+        </div>
+        <p class="tab-hint">Use left/right arrow keys to switch between Calculator, CGPA, and Cutoff.</p>
+
+        <div id="calcTab" class="tab-pane">
+            <div class="calc-layout">
+                <div class="calc-main">
+                    <!-- Display -->
+                    <div class="display">
+                        <input type="text" id="expression" placeholder="0" readonly>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="grid">
+                        <button onclick="append('Math.sin(')">sin</button>
+                        <button onclick="append('Math.cos(')">cos</button>
+                        <button onclick="append('Math.tan(')">tan</button>
+                        <button onclick="append('(')">(</button>
+                        <button onclick="append(')')">)</button>
+
+                        <button onclick="append('7')">7</button>
+                        <button onclick="append('8')">8</button>
+                        <button onclick="append('9')">9</button>
+                        <button onclick="append('/')">÷</button>
+                        <button onclick="clearDisplay()">AC</button>
+
+                        <button onclick="append('4')">4</button>
+                        <button onclick="append('5')">5</button>
+                        <button onclick="append('6')">6</button>
+                        <button onclick="append('*')">×</button>
+                        <button onclick="append('%')">%</button>
+
+                        <button onclick="append('1')">1</button>
+                        <button onclick="append('2')">2</button>
+                        <button onclick="append('3')">3</button>
+                        <button onclick="append('-')">−</button>
+                        <button onclick="append('.')">.</button>
+
+                        <button onclick="append('0')">0</button>
+                        <button onclick="append('00')">00</button>
+                        <button onclick="append('Math.PI')">π</button>
+                        <button onclick="append('+')">+</button>
+                        <button class="equal" onclick="calculateExpression()">=</button>
+
+                        <button onclick="deleteLast()">⌫</button>
+                    </div>
+                </div>
+
+                <aside class="calc-sidebar">
+                    <div class="feedback card-panel">
+                        <h3 id="confidence">Confidence: 0</h3>
+                        <p id="message">Welcome!</p>
+                    </div>
+
+                    <div class="card-panel">
+                        <h3>History</h3>
+                        <ul id="historyList"></ul>
+                    </div>
+
+                    <div class="card-panel">
+                        <h3>Sorted Results</h3>
+                        <ul id="sortedList"></ul>
+                    </div>
+
+                    <div class="card-panel">
+                        <h3>Recent Users (Admin)</h3>
+                        <button onclick="showUsers()">View Users</button>
+                        <button onclick="changePassword()">Change Password</button>
+                        <ul id="userList"></ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <div id="cgpaTab" class="tab-pane" style="display:none;">
+            <h3>CGPA Calculator</h3>
+            <p class="tab-description">Add subjects with credit and grade points, then compute CGPA.</p>
+            <div id="subjectRows"></div>
+            <div class="cgpa-actions">
+                <button onclick="addSubjectRow()">Add Subject</button>
+                <button onclick="calculateCgpa()">Compute CGPA</button>
+            </div>
+            <div class="cgpa-guide">
+                <h4>Credit & Grade Help</h4>
+                <p>If you do not know the subject credit, use the typical credit values below.</p>
+                <ul>
+                    <li>Theory course: 3-4 credits</li>
+                    <li>Lab course: 1-2 credits</li>
+                    <li>Project / Seminar: 2-4 credits</li>
+                </ul>
+                <p>Common grade points: O = 10, A+ = 9, A = 8, B+ = 7, B = 6, C = 5, P = 4, F = 0.</p>
+            </div>
+            <p id="cgpaResult" class="result-output">CGPA: -</p>
+        </div>
+
+        <div id="cutoffTab" class="tab-pane" style="display:none;">
+            <h3>Cutoff Calculator</h3>
+            <div class="tool-card">
+                <select id="cutoffCategory" onchange="updateCutoffInputs()">
+                    <option value="Engineering">Engineering</option>
+                    <option value="Agriculture">Pure Science (Agri)</option>
+                    <option value="Paramedical">Paramedical</option>
+                </select>
+                <div id="cutoffInputs"></div>
+                <button onclick="calculateCutoff()">Calculate Cutoff</button>
+                <p id="cutoffResult" class="result-output">Cutoff: -</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>           
